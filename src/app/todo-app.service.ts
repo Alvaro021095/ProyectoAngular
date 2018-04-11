@@ -15,7 +15,7 @@ export class TodoAppService {
 			this.db.collection('Todos').doc(id).set({ id, name, status });
 		}
 	}
-	changeToComplete(id: string, status: string) {
+	changeToStatus(id: string, status: string) {
 		this.db.collection('Todos').doc(id).update({ status });
 	}
 	deleteTodo(id: string) {
@@ -24,7 +24,14 @@ export class TodoAppService {
 	changeTable() {
 		return this.db.collection<Todo>('Todos').valueChanges();
 	}
-	clearCompletes(status: string) {
-		this.db.collection('Todos').doc(status).delete();
+	clearCompletes(to: Todo[]) {
+		for (const todoo of to) {
+			this.db.collection('Todos').doc(todoo.id).delete();
+		}
+	}
+	changeToCompletes(to: Todo[], status: string) {
+		for (const todoo of to) {
+			this.db.collection('Todos').doc(todoo.id).update({ status });
+		}
 	}
 }

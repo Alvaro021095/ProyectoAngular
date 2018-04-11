@@ -1,24 +1,41 @@
-<h1>Todo: <input type="text" placeholder="Add Todo" (keydown.enter)="addToTodos($event.target)"></h1>
+<div>
+  <button (click)="changeToCompletes()">Complete todos</button> <h1>todos</h1>
+</div>
+
+<input type="text" placeholder="What needs to be done?" (keydown.enter)="addToTodos($event.target)">
+
+<br>
 
 <table border>
   <tr *ngFor="let todo of todos">
     <span [ngSwitch]="todo.status">
       <div *ngSwitchCase="'Active'">
         <td>
-          <input type="checkbox" (change)="changeToComplete($event, todo.id, 'Complete')">
+          <input type="checkbox" (change)="changeToStatus($event, todo.id, 'Complete')">
              {{todo.name}}   <button (click)="deleteTodo(todo.id)">X</button>
         </td>
       </div>
       <p *ngSwitchCase="'Complete'">
         <td>
-          <input type="checkbox" (change)="changeToComplete($event, todo.id, 'Complete')">
+          <input type="checkbox" (change)="changeToStatus($event, todo.id, 'Active')">
              <del> {{todo.name}} </del> <button (click)="deleteTodo(todo.id)">X</button>
         </td>
       </p>
     </span>
   </tr>  
   
-  <app-todos (resp)="changeTable($event)" (clear)="clearCompletes($event)"></app-todos>
+  <tr>
+    <td>
+      <p>
+        {{item}}
+      </p>
+    </td>
+    <td>
+      <app-todos (resp)="changeTable($event)" (clear)="clearCompletes($event)"></app-todos>
+    </td>
+  </tr>
+
+  
 </table>
 
 
